@@ -1,0 +1,146 @@
+\r 從最前面開始輸出，覆蓋掉前面內容
+先打開檔案總管，並開啟特定資料夾。 按下鍵盤的Alt+D 就會自動跳到網址列上。 接著輸入cmd 並按下Enter 執行： 此時你就會發現cmd 命令提示字元已經開啟，並且自動進入檔案總管當前的資料夾！
+
+cmd 添加指令
+-cpuprofile string
+        write cpu profile to this file
+  -d    display diffs instead of rewriting files
+  -e    report all errors (not just the first 10 on different lines)
+  -l    list files whose formatting differs from gofmt's
+  -r string
+        rewrite rule (e.g., 'a[b:len(a)] -> a[b:]')
+  -s    simplify code
+  -w    write result to (source) file instead of stdout
+
+Q: What is the definition of API
+A: Application programe interface (diverse function in packages ) 
+
+Q: What is Dos
+A: Disk Operating System
+
+Q: GOROOT GOPATH 環境變量 ?
+A: 通常設了兩個環境變量 GOROOT => 在安裝時就會幫你設好 => 假設你安裝時 是安裝在
+d:\golang\ 這個資料夾 => 他會幫你在建一個go資料夾 裡面有一個src跟很多內建資料 
+=> 然後go所有官方的package都在src中，而話說回來GOROOT是甚麼? 他是安裝時幫妳設好
+的環境變量=> 就是 d:\golang\go => 這就是你的GOROOT => 在專案中引用任何包時會
+"優先"到此GOROOT下的src下找package 若沒有會再到PATH下找，而PATH就是自己建立的
+環境變量 => 就是你的go專案的放置處 例如建立在 d:\goproject\src\project01
+而PATH 就是src前的root => PATH 為 d:\goproject => 所以GOROOT的src下找不到
+package就到PATH下的src下找package => 所以問題來了! 今天要import自己寫的package
+例如像要import d:\goproject\src\project01\include\include.go裡的 func Greeting()
+要怎麼做? 就是import src以後的子目錄 => 也就是 import project01/include/include
+接下來才能使用func Greeting。
+
+Q：int 默認值
+A: 0
+
+Q : name := "STEVEN"
+A : 就是 var name string 加上 name = "STEVEN" 的省略寫法(先定義再賦值)
+
+D : float64 精度比 float32 還精
+
+Q : Closure (閉包) 的好處 ?
+A : 可以保留先前引用的某個值，call function 時 可以不用重複輸入
+
+Q : defer 是甚麼 ?
+A : 被宣告defer的語句會被放到 專屬derfer stack中 等其所在之function執行完畢後 會 pop 出 => 意味著它是先入後出
+
+Q : defer 最主要的價值 ?
+A : 可以即時釋放函數創建資源 例如: defer file.close(), 不用再擔心何時要關閉資源
+
+Q : function 的參數傳遞方式分類 ?
+A : 
+值類型 => int..., float..., bool, string, array, struct  => copy value
+引用類型 => pointer, slice, map, chain, interface...etc  => copy address
+
+Q : Golang 編碼 ?
+A : Golang 編碼 統一是utf-8 (ascii =>數字及字母 為 1 Bytes) (漢字 為 3 bytes)
+
+Q : r := []rune(str) ?
+A : 能解決 %c 無法印出中文字符問題 
+
+Q : 錯誤捕獲機制 ?
+A :
+假設出現異常錯誤(panic) 拋出 panic 也就是 error
+Golang 可以使用 defer + recover 來 capture and handle error
+其價值在於可以捕獲後 進行處理動作 且不影響後續程式碼執行
+
+Q : nil ?
+A : 
+按照Go語言規範，任何型別在未初始化時都對應一個零值：布林型別是false，整型是0，字串是""
+，而指標、函式、interface、slice、channel和map的零值都是nil。
+
+Q : interface 用處?
+A : 常常interface 其實就是用來希望在不破壞原結構體繼承關係的基礎上，對結構體進行功能的擴展 !!!!!!
+
+Q : extends 價值?
+A : 解決 複用性 與 可維護性
+
+Q : interface 價值 ?
+A : 
+設計，設計好各種規範(method)，讓其他自訂義類型去實現這些方法
+實際上可以看作interface比繼承的耦合性較弱，可以依定程度上的解偶
+實現多態特性(usb例子) => 可以將function的傳入值設為interface，故只要滿足其interface規範的自訂義類型
+都可以去傳入此function
+
+Q : assertion ?
+A : 
+無法判斷真該interface內傳入的類型，可以用類型斷言轉型判斷是否為該類型，若true的話，return已轉為該類型的物件
+b = a.(類型) ex : b = a.(float64)
+b 得到轉型後的a , a的類型還是interface
+
+Q : 文件真實含意?
+A : 文件就是一個數據源(數據流)
+輸入流(讀文件)
+輸出流(寫文件)
+
+Q : 併發與並行 ?
+A : 
+多線程程序在單核心上運行，就是併發 -> 微觀來看其實是很多thread在同一顆cpu上輪流占用cpu
+多線程程序在多核心上運行，就是並行 -> 假設有4顆cpu微觀來看一次頂多就是4個thread同時執行
+
+Q : golang 高併發特性
+A : 利用goroutine
+
+Q : goroutine(協程)?
+A : one process include many thread，one thread include many goroutine
+
+Q : goroutine 特性 ?
+A : 
+1. 有獨立的stack (有點像thread)
+2. 有共享的heap (有點像thread)
+3. 調度由用戶直接控制
+4. goroutine is a lightweight thread
+官方解釋:
+Goroutines are part of making concurrency easy to use. 
+The idea, which has been around for a while, 
+is to multiplex independently executing functions—coroutines—onto a set of threads. 
+When a coroutine blocks, such as by calling a blocking system call, 
+the run-time automatically moves other coroutines on the same operating system thread to a different, 
+runnable thread so they won’t be blocked. The programmer sees none of this, which is the point. 
+The result, which we call goroutines, can be very cheap: 
+they have little overhead beyond the memory for the stack, which is just a few kilobytes.
+
+** 使用thread對context switch 太繁重，使用goroutine讓兩個事情同時在同一個thread做減少context switch
+
+Q : goroutine的提問1 ?
+A : 在使用goroutine時，M(主線程)若執行結束，不會管去管同一個M上執行的其他G(協程)是否執行完，會直接結束
+
+Q : 何謂race condition ?
+A : 多核心情況下，會發生在"併行"程序中，因為在同一個process下，thread(or goroutine)之間會有共享的資源，當發生競爭資源的情況
+就是同時修改共享資源，在沒有併行控制下，會造成重大的存取衝突。
+
+Q : goroutine出現fatal error: concurrent map writes錯誤(也就是發生race condition)?
+A : 開出不同的goroutine無保護機制的去訪問同一個map數據結構 -> 這裡會引出goroutine之間如何溝通資料
+
+Q : 使用goroutine去無效果 ?
+A : 可能是M(主線程)結束前，G(協程)來不急做就結束了
+
+Q : golang 強大的工具 data race detector ?
+A : 在 go build時 加一個 -race 就可以偵測出race conditon的發生和結果
+ex: go build -race main.go
+
+Q : assert 斷言使用情況 ?
+A : 將interface{} type強制轉為其他型別
+
+
